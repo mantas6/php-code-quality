@@ -11,7 +11,9 @@ use Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
+use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedCallRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use RectorLaravel\Set\LaravelSetProvider;
 
 return RectorConfig::configure()
@@ -35,6 +37,9 @@ return RectorConfig::configure()
         CombineIfRector::class,
         SimplifyIfElseToTernaryRector::class,
         ExplicitBoolCompareRector::class,
+
+        DeclareStrictTypesTestsRector::class,
+        DeclareStrictTypesRector::class,
     ])
     ->withPreparedSets(
         deadCode: true,
@@ -45,7 +50,10 @@ return RectorConfig::configure()
         privatization: true,
         instanceOf: true,
         earlyReturn: true,
-        // strictBooleans: true,
+        carbon: true,
+        rectorPreset: true,
+        phpunitCodeQuality: true,
+
     )
     ->withImportNames(removeUnusedImports: true)
     ->withPhpSets()
