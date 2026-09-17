@@ -1,5 +1,5 @@
 {
-    "present": "laravel",
+    "preset": "laravel",
     "rules": {
         "not_operator_with_successor_space": false,
         "backtick_to_shell_exec": true,

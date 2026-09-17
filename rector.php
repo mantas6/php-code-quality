@@ -2,19 +2,14 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\If_\CombineIfRector;
-use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
-use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
-use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
+use Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector;
 use Rector\CodingStyle\Rector\PostInc\PostIncDecToPreIncDecRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\MethodCall\RemoveNullArgOnNullDefaultParamRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
-use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
-use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\PHPUnit\CodeQuality\Rector\StmtsAwareInterface\DeclareStrictTypesTestsRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
-use RectorLaravel\Set\LaravelSetProvider;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -28,19 +23,15 @@ return RectorConfig::configure()
         __DIR__ . '/public',
     ])
     ->withSkip([
-        AddOverrideAttributeToOverriddenMethodsRector::class,
         ClosureToArrowFunctionRector::class,
-        NullToStrictStringFuncCallArgRector::class,
         RemoveNullArgOnNullDefaultParamRector::class,
         // ReturnTypeFromStrictTypedCallRector::class,
-        EncapsedStringsToSprintfRector::class,
-        CombineIfRector::class,
-        SimplifyIfElseToTernaryRector::class,
-        ExplicitBoolCompareRector::class,
 
+        SafeDeclareStrictTypesRector::class,
         DeclareStrictTypesTestsRector::class,
         DeclareStrictTypesRector::class,
         PostIncDecToPreIncDecRector::class,
+        LocallyCalledStaticMethodToNonStaticRector::class,
     ])
     ->withPreparedSets(
         deadCode: true,
@@ -58,5 +49,4 @@ return RectorConfig::configure()
     )
     ->withImportNames(removeUnusedImports: true)
     ->withPhpSets()
-    ->withSetProviders(LaravelSetProvider::class)
-    ->withComposerBased(laravel: true);
+    ->withComposerBased(phpunit: true, laravel: true);
